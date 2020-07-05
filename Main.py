@@ -4,6 +4,40 @@ import heapq
 from collections import Counter
 import pickle
 import json
+from tkinter import *
+#interfaz gráfica
+codigo=""
+
+def guardartxt():
+    frase=texto.get()
+    #print(frase)
+    
+    outf = open ('texto.txt','w')
+    outf.write(frase)
+    outf.close()
+    #leer archivo de entrada
+    inf = open("texto.txt")
+    frase = inf.read()
+    inf.close()
+    #calcular probabilidad
+    probabilidad = probs(frase)
+    #crear arbol
+    arbol1=arbol(probabilidad)
+    #diccionario
+    dic=diccionario(arbol1)
+    #codidicar
+    codigo =codificar(dic,frase)
+    #almacenar
+    store(codigo,dic,"salida")
+    datos=open("salida.dic")
+    cadena=datos.read()
+    datos.close()
+    labelTEXT=Label(root,text="Bytes: ")
+    labelTEXT.pack()
+    labeljson = Label(root,text=cadena)
+    labeljson.pack()
+
+
 
 #funcion para calcular las probabilidades de aparecer de cada caracter
 def probs(frase):
@@ -57,7 +91,11 @@ def codificar(dic,cont):
         res = res + code
     res = '1' + res + dic['end'] # Agregamos el caracter final y el 1 inicial
     res = res + (len(res) % 8 * "0") # Agregamos ceros para convertir en multiplo de 8
-    print (res)
+    #print (res)
+    label2=Label(root,text="Texto Codificado por el Algoritmo de Huffman")
+    label2.pack()
+    labelsalida=Label(root,text=res)
+    labelsalida.pack()
     
     return int(res,2)
 
@@ -73,28 +111,25 @@ def store(data,dic,outfile):
     outf = open(outfile+".dic",'w')
     json.dump(dic,outf)
     outf.close()
+    
     pass
 
 
 if __name__ == "__main__":
     usage = """Usage: ./Main.py fichero_de_entrada fichero_de_salida"""
 
-    if len(sys.argv) < 3:
-        print(usage)
-        sys.exit(1)
+root=Tk()
 
-    #leer archivo de entrada
-    inf = open(sys.argv[1])
-    frase = inf.read()
-    inf.close()
-    #calcular probabilidad
-    probabilidad = probs(frase)
-    #crear arbol
-    arbol1=arbol(probabilidad)
-    #diccionario
-    dic=diccionario(arbol1)
-    #codidicar
-    codigo =codificar(dic,frase)
-    #almacenar
-    store(codigo,dic,sys.argv[2])
-    print("Archivo comprimido!")
+root.title("Algoritmo De Huffman")
+root.resizable(1,1)
+
+label = Label(root,text="Bienvenido, Ingresa la frase a Codificar")
+label.pack()
+texto = Entry()
+texto.pack()
+Button(root, text="Codificar", command=guardartxt).pack() 
+
+
+root.mainloop()
+
+    
