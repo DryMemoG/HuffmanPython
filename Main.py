@@ -11,7 +11,8 @@ codigo=""
 def guardartxt():
     frase=texto.get()
     #print(frase)
-    
+    fraseor=(len(frase)*8)
+    print(fraseor)
     outf = open ('texto.txt','w')
     outf.write(frase)
     outf.close()
@@ -32,10 +33,17 @@ def guardartxt():
     datos=open("salida.dic")
     cadena=datos.read()
     datos.close()
+    frasecod=len(cadena)
+    print(frasecod)
+    comp=((frasecod*100)/fraseor)
+    ratio=100-comp
+    ratiofinal=("El ratio de compresión es de : ",ratio,"%")
     labelTEXT=Label(root,text="Bytes: ")
     labelTEXT.pack()
     labeljson = Label(root,text=cadena)
     labeljson.pack()
+    labelTEXT=Label(root,text=ratiofinal)
+    labelTEXT.pack()
 
 
 

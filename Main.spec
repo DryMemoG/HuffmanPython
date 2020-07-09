@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['Main.py'],
-             pathex=['/home/drymemog/HuffmanPython'],
+             pathex=['C:\\Users\\dryme\\Documents\\GitHub\\HuffmanPython'],
              binaries=[],
              datas=[],
              hiddenimports=[],
